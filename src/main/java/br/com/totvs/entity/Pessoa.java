@@ -25,6 +25,9 @@ public class Pessoa implements Serializable {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "nome",nullable = false)
+    private String nome;
+
     @Column(name = "apelido",length = 100)
     private String apelido;
 
@@ -40,15 +43,6 @@ public class Pessoa implements Serializable {
     @Column(name = "data_nascimento")
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
-
-    @OneToMany(mappedBy = "pessoaEnderecoId")
-    private List<Endereco> enderecos;
-
-    @OneToMany(mappedBy = "pessoaDependenteId")
-    private List<Dependente> dependentes;
-
-    @OneToMany(mappedBy = "pessoaContatoId")
-    private List<Contato> contatos;
 
     public Pessoa() {
     }
@@ -101,28 +95,12 @@ public class Pessoa implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public String getNome() {
+        return nome;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
-
-    public List<Dependente> getDependentes() {
-        return dependentes;
-    }
-
-    public void setDependentes(List<Dependente> dependentes) {
-        this.dependentes = dependentes;
-    }
-
-    public List<Contato> getContatos() {
-        return contatos;
-    }
-
-    public void setContatos(List<Contato> contatos) {
-        this.contatos = contatos;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override
@@ -142,6 +120,7 @@ public class Pessoa implements Serializable {
     public String toString() {
         return "Pessoa{" +
                 "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", apelido='" + apelido + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", profissao='" + profissao + '\'' +
