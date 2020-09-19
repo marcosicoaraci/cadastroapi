@@ -1,0 +1,85 @@
+
+
+CREATE SEQUENCE "contato_db"."public"."contato_id_seq";
+
+CREATE TABLE "contato_db"."public"."contato" (
+                "id" INTEGER NOT NULL DEFAULT nextval('"contato_db"."public"."contato_id_seq"'),
+                "ddd" VARCHAR(2) NOT NULL,
+                "numero" VARCHAR(9) NOT NULL,
+                "tipo_contato" VARCHAR(30) NOT NULL,
+                "pessoa_id" INTEGER,
+                CONSTRAINT "contato_pk" PRIMARY KEY ("id")
+);
+
+
+ALTER SEQUENCE "contato_db"."public"."contato_id_seq" OWNED BY "contato_db"."public"."contato"."id";
+
+CREATE SEQUENCE "contato_db"."public"."dependente_id_seq";
+
+CREATE TABLE "contato_db"."public"."dependente" (
+                "id" INTEGER NOT NULL DEFAULT nextval('"contato_db"."public"."dependente_id_seq"'),
+                "nome" VARCHAR(255) NOT NULL,
+                "tipo_dependente" VARCHAR(50) NOT NULL,
+                "pessoa_id" INTEGER,
+                CONSTRAINT "dependente_pk" PRIMARY KEY ("id")
+);
+
+
+ALTER SEQUENCE "contato_db"."public"."dependente_id_seq" OWNED BY "contato_db"."public"."dependente"."id";
+
+CREATE SEQUENCE "contato_db"."public"."endereco_id_seq";
+
+CREATE TABLE "contato_db"."public"."endereco" (
+                "id" INTEGER NOT NULL DEFAULT nextval('"contato_db"."public"."endereco_id_seq"'),
+                "tipo_endereco" VARCHAR(50) NOT NULL,
+                "nome" VARCHAR(255) NOT NULL,
+                "numero" VARCHAR(20),
+                "complemento" VARCHAR(255),
+                "cep" VARCHAR(8),
+                "bairro" VARCHAR(255),
+                "cidade" VARCHAR(100),
+                "estado" VARCHAR(50),
+                "pais" VARCHAR(50),
+                "pessoa_id" INTEGER,
+                CONSTRAINT "endereco_pk" PRIMARY KEY ("id")
+);
+
+
+ALTER SEQUENCE "contato_db"."public"."endereco_id_seq" OWNED BY "contato_db"."public"."endereco"."id";
+
+CREATE SEQUENCE "contato_db"."public"."pessoa_id_seq";
+
+CREATE TABLE "contato_db"."public"."pessoa" (
+                "id" INTEGER NOT NULL DEFAULT nextval('"contato_db"."public"."pessoa_id_seq"'),
+                "nome" VARCHAR(255) NOT NULL,
+                "apelido" VARCHAR(100),
+                "cpf" VARCHAR(11) NOT NULL,
+                "profissao" VARCHAR(255) NOT NULL,
+                "salario" DOUBLE PRECISION NOT NULL,
+                "data_nascimento" DATE NOT NULL,
+                CONSTRAINT "pessoa_pk" PRIMARY KEY ("id")
+);
+
+
+ALTER SEQUENCE "contato_db"."public"."pessoa_id_seq" OWNED BY "contato_db"."public"."pessoa"."id";
+
+ALTER TABLE "contato_db"."public"."contato" ADD CONSTRAINT "pessoa_contato_fk"
+FOREIGN KEY ("pessoa_id")
+REFERENCES "contato_db"."public"."pessoa" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE
+NOT DEFERRABLE;
+
+ALTER TABLE "contato_db"."public"."dependente" ADD CONSTRAINT "pessoa_dependente_fk"
+FOREIGN KEY ("pessoa_id")
+REFERENCES "contato_db"."public"."pessoa" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE
+NOT DEFERRABLE;
+
+ALTER TABLE "contato_db"."public"."endereco" ADD CONSTRAINT "pessoa_endereco_fk"
+FOREIGN KEY ("pessoa_id")
+REFERENCES "contato_db"."public"."pessoa" ("id")
+ON DELETE CASCADE
+ON UPDATE CASCADE
+NOT DEFERRABLE;

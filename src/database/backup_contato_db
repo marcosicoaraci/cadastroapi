@@ -1,0 +1,54 @@
+CREATE TABLE public.contato (
+	"id" int4 NOT NULL,
+	ddd varchar(2) NOT NULL,
+	numero varchar(9) NOT NULL,
+	tipo_contato varchar(30) NOT NULL,
+	pessoa_contato_id int4,
+	PRIMARY KEY ("id")
+);
+
+CREATE TABLE public.dependente (
+	"id" int4 NOT NULL,
+	nome varchar(255) NOT NULL,
+	tipo_dependente varchar(50) NOT NULL,
+	pessoa_dependente_id int4,
+	PRIMARY KEY ("id")
+); 
+
+CREATE TABLE public.endereco (
+	"id" int4 NOT NULL,
+	bairro varchar(255),
+	cep varchar(8),
+	cidade varchar(100),
+	complemento varchar(255),
+	estado varchar(50),
+	nome varchar(50) NOT NULL,
+	numero varchar(20),
+	pais varchar(50),
+	tipo_endereco varchar(50) NOT NULL,
+	pessoa_endereco_id int4,
+	PRIMARY KEY ("id")
+); 
+CREATE TABLE public.pessoa (
+	"id" int4 NOT NULL,
+	apelido varchar(100),
+	cpf varchar(11) NOT NULL,
+	data_nascimento date,
+	profissao varchar(255) NOT NULL,
+	salario float8 NOT NULL,
+	nome varchar(255) NOT NULL,
+	PRIMARY KEY ("id")
+); 
+INSERT INTO public.contato("id", ddd, numero, tipo_contato, pessoa_contato_id) VALUES (1, '91', '999999999', 'CONTATO', 3); 
+INSERT INTO public.contato("id", ddd, numero, tipo_contato, pessoa_contato_id) VALUES (2, '91', '99999999', 'RESIDENCIAL', 3); 
+INSERT INTO public.dependente("id", nome, tipo_dependente, pessoa_dependente_id) VALUES (1, 'Martin Seamus McFly', 'FILHO', 3); 
+INSERT INTO public.dependente("id", nome, tipo_dependente, pessoa_dependente_id) VALUES (2, 'Farouk Bulsara', 'FILHO', 3); 
+INSERT INTO public.endereco("id", bairro, cep, cidade, complemento, estado, nome, numero, pais, tipo_endereco, pessoa_endereco_id) VALUES (1, 'UMARIZAL', '99999999', 'BELÉM', 'ANTÔNIO BARRETO', 'PARÁ', 'BOAVENTURA DA SILVA', 's/n', 'BRASIL', 'RESIDENCIAL', 3); 
+INSERT INTO public.endereco("id", bairro, cep, cidade, complemento, estado, nome, numero, pais, tipo_endereco, pessoa_endereco_id) VALUES (2, 'UMARIZAL', '99999999', 'BELÉM', 'RUA TIRADENTES', 'PARÁ', 'VISCONDE DE SOUZA FRANCO', 's/n', 'BRASIL', 'COMERCIAL', 3); 
+INSERT INTO public.pessoa("id", apelido, cpf, data_nascimento, profissao, salario, nome) VALUES (1, 'Marty McFly', '99999999999', '1980-09-16', 'Time Machine Driver', 10000, 'Martin Seamus McFly'); 
+INSERT INTO public.pessoa("id", apelido, cpf, data_nascimento, profissao, salario, nome) VALUES (3, 'Lorraine', '99999999998', '1960-09-16', 'Mother', 10000, 'Lorraine Baines McFly'); 
+INSERT INTO public.pessoa("id", apelido, cpf, data_nascimento, profissao, salario, nome) VALUES (4, 'Biff', '99999999978', '1980-09-16', 'Student', 10000, 'Biff Howard Tannen'); 
+CREATE UNIQUE INDEX contato_pkey ON public.contato USING btree (id);
+CREATE UNIQUE INDEX dependente_pkey ON public.dependente USING btree (id);
+CREATE UNIQUE INDEX endereco_pkey ON public.endereco USING btree (id);
+CREATE UNIQUE INDEX pessoa_pkey ON public.pessoa USING btree (id);
