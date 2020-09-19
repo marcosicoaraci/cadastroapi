@@ -47,6 +47,7 @@ CONTENT-TYPE: application/json
 REQUEST:
 
 {
+
     "nome": "Biff Howard Tannen",
     "apelido": "Biff", 
     "cpf": "99999999978",
@@ -58,6 +59,7 @@ REQUEST:
 RESPONSE:
 
 {
+
     "id": 5,
     "nome": "Biff Howard Tannen",
     "apelido": "Biff",
@@ -79,6 +81,7 @@ CONTENT-TYPE: application/json
 REQUEST:
 
 {
+
     "id": 2,
     "nome": "Martin Seamus McFly Junior",
     "apelido": "Marty McFly", 
@@ -91,6 +94,7 @@ REQUEST:
 RESPONSE:
 
 {
+
     "id": 2,
     "nome": "Martin Seamus McFly Junior",
     "apelido": "Marty McFly",
@@ -125,6 +129,7 @@ CONTENT-TYPE: application/json
 RESPONSE:
 
 {
+
     "id": 3,
     "nome": "Lorraine Baines McFly",
     "apelido": "Lorraine",
@@ -146,6 +151,7 @@ CONTENT-TYPE: application/json
 RESPONSE:
 
 [
+
     {
         "id": 1,
         "nome": "Martin Seamus McFly",
@@ -191,6 +197,7 @@ CONTENT-TYPE: application/json
 RESPONSE:
 
 [
+
     {
         "id": 1,
         "ddd": "91",
@@ -239,6 +246,7 @@ CONTENT-TYPE: application/json
 RESPONSE:
 
 [
+
     {
         "id": 1,
         "nome": "Martin Seamus McFly",
@@ -285,6 +293,7 @@ CONTENT-TYPE: application/json
 RESPONSE:
 
 [
+
     {
         "id": 1,
         "tipoEndereco": "RESIDENCIAL",
@@ -329,6 +338,375 @@ RESPONSE:
     }
 ]
 
+Os recursos auxiliares seguem o mesmo padrão ao descrito acima. São os seguintes:
+
+Cadastrar Dependente
+------------------
+REQUISIÇÃO: POST
+
+@PathVariable("idPessoa")
+
+URL: http://localhost:8080/cadastro-api/dependentes/3/salvardependente
+
+CONTENT-TYPE: application/json
+
+REQUEST:
+
+{
+
+    "nome": "Martin Semus Mcfly",
+    "tipoDependente": "FILHO"
+}
+
+RESPONSE:
+
+    {
+        "id": 1,
+        "nome": "Martin Seamus McFly",
+        "tipoDependente": "FILHO",
+        "pessoaDependenteId": {
+            "id": 3,
+            "nome": "Lorraine Baines McFly",
+            "apelido": "Lorraine",
+            "cpf": "99999999998",
+            "profissao": "Mother",
+            "salario": 10000.0,
+            "dataNascimento": "1960-09-16"
+        }
+    }
+
+Editar Dependente
+-------------
+
+REQUISIÇÃO: PUT
+
+@PathVariable("idPessoa")
+
+URL: http://localhost:8080/cadastro-api/dependentes/3/updatedependente
+
+CONTENT-TYPE: application/json
+
+REQUEST:
+
+{
+
+    "id":1,
+    "nome": "Martin Seamus McFly de Azevedo",
+    "tipoDependente": "FILHO"
+}
+
+RESPONSE:
+
+{
+
+    "id": 1,
+    "nome": "Martin Seamus McFly de Azevedo",
+    "apelido": "Marty McFly",
+    "cpf": "99999999999",
+    "profissao": "Time Machine Driver",
+    "salario": 10000.0,
+    "dataNascimento": "1980-09-17"
+}
+
+Excluir Dependente
+--------------
+
+REQUISIÇÃO: DELETE
+
+@PathVariable("id") neste caso é o id do dependente
+
+URL: http://localhost:8080/cadastro-api/dependentes/delete/3
+
+CONTENT-TYPE: application/json
+
+Buscar Dependente
+-------------
+
+REQUISIÇÃO: GET
+
+@PathVariable("id") neste caso é o id do dependente
+
+URL: http://localhost:8080/cadastro-api/dependentes/2
+
+CONTENT-TYPE: application/json
+
+RESPONSE:
+
+{
+
+    "id": 2,
+    "nome": "Farouk Bulsara",
+    "tipoDependente": "FILHO",
+    "pessoaDependenteId": {
+        "id": 3,
+        "nome": "Lorraine Baines McFly",
+        "apelido": "Lorraine",
+        "cpf": "99999999998",
+        "profissao": "Mother",
+        "salario": 10000.0,
+        "dataNascimento": "1960-09-16"
+    }
+}
+
+Cadastrar Contato
+------------------
+REQUISIÇÃO: POST
+
+@PathVariable("idPessoa")
+
+URL: http://localhost:8080/cadastro-api/contatos/3/salvarcontato
+
+CONTENT-TYPE: application/json
+
+REQUEST:
+
+{
+
+    "ddd": "91",
+    "numero": "999799999", 
+    "tipoContato": "COMERCIAL" 
+}
+
+RESPONSE:
+
+    {
+        "id": 1,
+        "ddd": "91",
+        "numero": "999999999",
+        "tipoContato": "CONTATO",
+        "pessoaContatoId": {
+            "id": 3,
+            "nome": "Lorraine Baines McFly",
+            "apelido": "Lorraine",
+            "cpf": "99999999998",
+            "profissao": "Mother",
+            "salario": 10000.0,
+            "dataNascimento": "1960-09-16"
+        }
+    }
+
+Editar Contato
+-------------
+
+REQUISIÇÃO: PUT
+
+@PathVariable("idPessoa")
+
+URL: http://localhost:8080/cadastro-api/contatos/3/updatecontato
+
+CONTENT-TYPE: application/json
+
+REQUEST:
+
+}
+    
+    "id": 3,
+    "ddd": "98",
+    "numero": "999799999",
+    "tipoContato": "COMERCIAL"
+}
+
+RESPONSE:
+
+{
+    
+    "id": 1,
+    "nome": "Martin Seamus McFly de Azevedo",
+    "apelido": "Marty McFly",
+    "cpf": "99999999999",
+    "profissao": "Time Machine Driver",
+    "salario": 10000.0,
+    "dataNascimento": "1980-09-17"
+}
+
+Excluir Contato
+--------------
+
+REQUISIÇÃO: DELETE
+
+@PathVariable("id") neste caso é o id do contato
+
+URL: http://localhost:8080/cadastro-api/contatos/delete/3
+
+CONTENT-TYPE: application/json
+
+Buscar Contato
+-------------
+
+REQUISIÇÃO: GET
+
+@PathVariable("id") neste caso é o id do contato
+
+URL: http://localhost:8080/cadastro-api/contatos/1
+
+CONTENT-TYPE: application/json
+
+RESPONSE:
+
+{
+    
+    "id": 1,
+    "ddd": "91",
+    "numero": "999999999",
+    "tipoContato": "CONTATO",
+    "pessoaContatoId": {
+        "id": 3,
+        "nome": "Lorraine Baines McFly",
+        "apelido": "Lorraine",
+        "cpf": "99999999998",
+        "profissao": "Mother",
+        "salario": 10000.0,
+        "dataNascimento": "1960-09-16"
+    }
+    
+}
+
+Cadastrar Endereço
+------------------
+REQUISIÇÃO: POST
+
+@PathVariable("idPessoa")
+
+URL: http://localhost:8080/cadastro-api/enderecos/3/salvarendereco
+
+CONTENT-TYPE: application/json
+
+REQUEST:
+
+{
+
+    "tipoEndereco": "CONTATO",
+    "nome": "VISCONDE DE INHAUMA", 
+    "numero": "s/n",
+    "complemento": "NAO TEM", 
+    "cep": 99999999, 
+    "bairro": "UMARIZAL",
+    "cidade": "BELÉM",
+    "estado": "PARÁ",
+    "pais": "BRASIL"
+}
+
+RESPONSE:
+
+    {
+        "id": 1,
+        "tipoEndereco": "RESIDENCIAL",
+        "nome": "BOAVENTURA DA SILVA",
+        "numero": "s/n",
+        "complemento": "ANTÔNIO BARRETO",
+        "cep": "99999999",
+        "bairro": "UMARIZAL",
+        "cidade": "BELÉM",
+        "estado": "PARÁ",
+        "pais": "BRASIL",
+        "pessoaEnderecoId": {
+            "id": 3,
+            "nome": "Lorraine Baines McFly",
+            "apelido": "Lorraine",
+            "cpf": "99999999998",
+            "profissao": "Mother",
+            "salario": 10000.0,
+            "dataNascimento": "1960-09-16"
+        }
+    },
+
+Editar Endereço
+-------------
+
+REQUISIÇÃO: PUT
+
+@PathVariable("idPessoa")
+
+URL: http://localhost:8080/cadastro-api/enderecos/3/updateendereco
+
+CONTENT-TYPE: application/json
+
+REQUEST:
+
+{
+
+    "id": 3,
+    "tipoEndereco": "CONTATO",
+    "nome": "VISCONDE DE INHAUMA",
+    "numero": "s/n",
+    "complemento": "ALFERES COSTA",
+    "cep": "99999999",
+    "bairro": "UMARIZAL",
+    "cidade": "BELÉM",
+    "estado": "PARÁ",
+    "pais": "BRASIL"
+}
+RESPONSE:
+
+{
+
+    "id": 3,
+    "tipoEndereco": "CONTATO",
+    "nome": "VISCONDE DE INHAUMA",
+    "numero": "10",
+    "complemento": "ALFERES COSTA",
+    "cep": "99999999",
+    "bairro": "UMARIZAL",
+    "cidade": "BELÉM",
+    "estado": "PARÁ",
+    "pais": "BRASIL",
+    "pessoaEnderecoId": {
+        "id": 3,
+        "nome": "Lorraine Baines McFly",
+        "apelido": "Lorraine",
+        "cpf": "99999999998",
+        "profissao": "Mother",
+        "salario": 10000.0,
+        "dataNascimento": "1960-09-16"
+    }
+}
+
+Excluir Endereço
+--------------
+
+REQUISIÇÃO: DELETE
+
+@PathVariable("id") neste caso é o id do endereço
+
+URL: http://localhost:8080/cadastro-api/enderecos/delete/3
+
+CONTENT-TYPE: application/json
+
+Buscar Endereço
+-------------
+
+REQUISIÇÃO: GET
+
+@PathVariable("id") neste caso é o id do endereço
+
+URL: http://localhost:8080/cadastro-api/enderecos/1
+
+CONTENT-TYPE: application/json
+
+RESPONSE:
+
+{
+
+    "id": 1,
+    "tipoEndereco": "RESIDENCIAL",
+    "nome": "BOAVENTURA DA SILVA",
+    "numero": "s/n",
+    "complemento": "ANTÔNIO BARRETO",
+    "cep": "99999999",
+    "bairro": "UMARIZAL",
+    "cidade": "BELÉM",
+    "estado": "PARÁ",
+    "pais": "BRASIL",
+    "pessoaEnderecoId": {
+        "id": 3,
+        "nome": "Lorraine Baines McFly",
+        "apelido": "Lorraine",
+        "cpf": "99999999998",
+        "profissao": "Mother",
+        "salario": 10000.0,
+        "dataNascimento": "1960-09-16"
+    }
+}
 
 
 
