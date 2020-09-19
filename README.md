@@ -109,7 +109,7 @@ Excluir Pessoa
 
 REQUISIÇÃO: DELETE
 
-@PathVariable("id")
+PARÂMETRO: @PathVariable("id")
 
 URL: http://localhost:8080/cadastro-api/pessoas/delete/2
 
@@ -120,7 +120,7 @@ Buscar Pessoa
 
 REQUISIÇÃO: GET
 
-@PathVariable("id")
+PARÂMETRO: @PathVariable("id")
 
 URL: http://localhost:8080/cadastro-api/pessoas/3
 
@@ -188,7 +188,7 @@ Lista todos os contatos da pessoa.
 
 REQUISIÇÃO: GET
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/pessoas/contatos/3
 
@@ -237,7 +237,7 @@ Lista todos os dependentes da pessoa.
 
 REQUISIÇÃO: GET
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/pessoas/dependentes/3
 
@@ -284,7 +284,7 @@ Lista todos os endereços da pessoa.
 
 REQUISIÇÃO: GET
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/pessoas/enderecos/3
 
@@ -344,7 +344,7 @@ Cadastrar Dependente
 ------------------
 REQUISIÇÃO: POST
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/dependentes/3/salvardependente
 
@@ -380,7 +380,7 @@ Editar Dependente
 
 REQUISIÇÃO: PUT
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/dependentes/3/updatedependente
 
@@ -413,7 +413,7 @@ Excluir Dependente
 
 REQUISIÇÃO: DELETE
 
-@PathVariable("id") neste caso é o id do dependente
+PARÂMETRO: @PathVariable("id") neste caso é o id do dependente
 
 URL: http://localhost:8080/cadastro-api/dependentes/delete/3
 
@@ -424,7 +424,7 @@ Buscar Dependente
 
 REQUISIÇÃO: GET
 
-@PathVariable("id") neste caso é o id do dependente
+PARÂMETRO: @PathVariable("id") neste caso é o id do dependente
 
 URL: http://localhost:8080/cadastro-api/dependentes/2
 
@@ -452,7 +452,7 @@ Cadastrar Contato
 ------------------
 REQUISIÇÃO: POST
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/contatos/3/salvarcontato
 
@@ -490,7 +490,7 @@ Editar Contato
 
 REQUISIÇÃO: PUT
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/contatos/3/updatecontato
 
@@ -529,7 +529,7 @@ Excluir Contato
 
 REQUISIÇÃO: DELETE
 
-@PathVariable("id") neste caso é o id do contato
+PARÂMETRO: @PathVariable("id") neste caso é o id do contato
 
 URL: http://localhost:8080/cadastro-api/contatos/delete/3
 
@@ -540,7 +540,7 @@ Buscar Contato
 
 REQUISIÇÃO: GET
 
-@PathVariable("id") neste caso é o id do contato
+PARÂMETRO: @PathVariable("id") neste caso é o id do contato
 
 URL: http://localhost:8080/cadastro-api/contatos/1
 
@@ -570,7 +570,7 @@ Cadastrar Endereço
 ------------------
 REQUISIÇÃO: POST
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/enderecos/3/salvarendereco
 
@@ -620,7 +620,7 @@ Editar Endereço
 
 REQUISIÇÃO: PUT
 
-@PathVariable("idPessoa")
+PARÂMETRO: @PathVariable("idPessoa")
 
 URL: http://localhost:8080/cadastro-api/enderecos/3/updateendereco
 
@@ -671,7 +671,7 @@ Excluir Endereço
 
 REQUISIÇÃO: DELETE
 
-@PathVariable("id") neste caso é o id do endereço
+PARÂMETRO: @PathVariable("id") neste caso é o id do endereço
 
 URL: http://localhost:8080/cadastro-api/enderecos/delete/3
 
@@ -682,7 +682,7 @@ Buscar Endereço
 
 REQUISIÇÃO: GET
 
-@PathVariable("id") neste caso é o id do endereço
+PARÂMETRO: @PathVariable("id") neste caso é o id do endereço
 
 URL: http://localhost:8080/cadastro-api/enderecos/1
 
