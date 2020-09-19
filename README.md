@@ -28,8 +28,8 @@ Serviços criados.
 ----------------
 
 Para efetuar o cadastro de pessoa, outros serviços
-auxiliares também foram criados para complementar o cadastro de pessoa como: contato(para cadastrar
-os contatos de telefone da pessoa), dependente (para cadastrar os dependentes) e endereço para cadastrar 
+auxiliares também foram criados para complementar o cadastro como: contatos(para cadastrar
+os contatos de telefone), dependentes (para cadastrar os dependentes) e endereços para cadastrar 
 os endereços.
 
 O arquivo json com a lista dos endpoints que poderão ser importados para o Postman estão inclusos no diretório 
