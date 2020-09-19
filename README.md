@@ -36,8 +36,8 @@ O arquivo json com a lista dos endpoints que poderão ser importados para o Post
 "postman" localizado na pasta "src" do projeto. A seguir segue a descrição dos serviços:
 
 
-Cadastrar de Pessoa
-------------------
+Cadastrar Pessoa
+----------------
 REQUISIÇÃO: POST
 
 URL: http://localhost:8080/cadastro-api/pessoas
@@ -500,7 +500,7 @@ REQUEST:
 
 }
     
-    "id": 3,
+    "id": 1,
     "ddd": "98",
     "numero": "999799999",
     "tipoContato": "COMERCIAL"
@@ -508,16 +508,21 @@ REQUEST:
 
 RESPONSE:
 
-{
-    
-    "id": 1,
-    "nome": "Martin Seamus McFly de Azevedo",
-    "apelido": "Marty McFly",
-    "cpf": "99999999999",
-    "profissao": "Time Machine Driver",
-    "salario": 10000.0,
-    "dataNascimento": "1980-09-17"
-}
+    {
+        "id": 1,
+        "ddd": "98",
+        "numero": "999799999",
+        "tipoContato": "COMERCIAL",
+        "pessoaContatoId": {
+            "id": 3,
+            "nome": "Lorraine Baines McFly",
+            "apelido": "Lorraine",
+            "cpf": "99999999998",
+            "profissao": "Mother",
+            "salario": 10000.0,
+            "dataNascimento": "1960-09-16"
+        }
+    }
 
 Excluir Contato
 --------------
