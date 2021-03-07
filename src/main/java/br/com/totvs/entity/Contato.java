@@ -1,6 +1,7 @@
 package br.com.totvs.entity;
 
 import br.com.totvs.enuns.TipoContato;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ public class Contato implements Serializable {
     @Id
     @GeneratedValue(generator="ContatoGenerator", strategy= GenerationType.SEQUENCE)
     @Column(name = "id")
+    @JsonIgnore
     private Integer id;
 
     @Column(name = "ddd",nullable = false, length = 2)

@@ -1,6 +1,7 @@
 package br.com.totvs.entity;
 
 import br.com.totvs.enuns.TipoEndereco;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ public class Endereco implements Serializable {
     @Id
     @GeneratedValue(generator="EnderecoGenerator", strategy= GenerationType.SEQUENCE)
     @Column(name = "id")
+    @JsonIgnore
     private Integer id;
 
     @Enumerated(EnumType.STRING)

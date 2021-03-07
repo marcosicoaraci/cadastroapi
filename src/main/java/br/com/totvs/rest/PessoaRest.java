@@ -8,6 +8,7 @@ import br.com.totvs.service.ContatoSrv;
 import br.com.totvs.service.DependenteSrv;
 import br.com.totvs.service.EnderecoSrv;
 import br.com.totvs.service.PessoaSrv;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -54,6 +55,7 @@ public class PessoaRest {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    @Operation(summary = "Incluir Pessoa", description = "Realiza o cadastro da pessoa ")
     public ResponseEntity<Pessoa> post(@RequestBody Pessoa pessoa) {
         pessoaSrv.salvar(pessoa);
 

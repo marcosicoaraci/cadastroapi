@@ -1,5 +1,7 @@
 package br.com.totvs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Pessoa implements Serializable {
     @Id
     @GeneratedValue(generator="PessoaGenerator", strategy=GenerationType.SEQUENCE)
     @Column(name = "id")
+    @JsonIgnore
     private Integer id;
 
     @Column(name = "nome",nullable = false)
