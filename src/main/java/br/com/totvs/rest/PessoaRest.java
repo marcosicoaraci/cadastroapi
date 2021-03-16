@@ -1,5 +1,7 @@
 package br.com.totvs.rest;
 
+import br.com.totvs.dto.request.PessoaRequestDTO;
+import br.com.totvs.dto.response.PessoaResponseDTO;
 import br.com.totvs.entity.Contato;
 import br.com.totvs.entity.Dependente;
 import br.com.totvs.entity.Endereco;
@@ -49,10 +51,7 @@ public class PessoaRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = Pessoa.class))}),
-            @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = ExceptionResponse.class))}),
+                    schema = @Schema(implementation = PessoaResponseDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -71,9 +70,6 @@ public class PessoaRest {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = Pessoa.class))}),
-            @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ExceptionResponse.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -93,9 +89,6 @@ public class PessoaRest {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = Pessoa.class))}),
-            @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ExceptionResponse.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -103,10 +96,10 @@ public class PessoaRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
-    public ResponseEntity<Pessoa> post(@RequestBody Pessoa pessoa) {
-        pessoaSrv.salvar(pessoa);
+    public ResponseEntity<PessoaResponseDTO> post(@RequestBody PessoaRequestDTO pessoaRequestDTO) {
+        PessoaResponseDTO pessoaResponseDTO = pessoaSrv.salvar(pessoaRequestDTO);
 
-        return new ResponseEntity<>(pessoa, HttpStatus.OK);
+        return new ResponseEntity<>(pessoaResponseDTO, HttpStatus.OK);
     }
 
 
@@ -116,9 +109,6 @@ public class PessoaRest {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = Pessoa.class))}),
-            @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ExceptionResponse.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -126,10 +116,10 @@ public class PessoaRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
-    public ResponseEntity<Pessoa> put(@RequestBody Pessoa pessoa) {
-        pessoaSrv.salvar(pessoa);
+    public ResponseEntity<PessoaResponseDTO> put(@RequestBody PessoaRequestDTO pessoaRequestDTO) {
+        PessoaResponseDTO pessoaResponseDTO = pessoaSrv.salvar(pessoaRequestDTO);
 
-        return new ResponseEntity<>(pessoa, HttpStatus.OK);
+        return new ResponseEntity<>(pessoaResponseDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -138,9 +128,6 @@ public class PessoaRest {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = Pessoa.class))}),
-            @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ExceptionResponse.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -162,12 +149,6 @@ public class PessoaRest {
                             schema = @Schema(implementation = Pessoa.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "400", description = "Erro de validação",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "401", description = "Não autorizado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "403", description = "Acesso proibido ao usuário",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "500", description = "Erro interno",
@@ -183,14 +164,6 @@ public class PessoaRest {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = Pessoa.class))}),
-            @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "400", description = "Erro de validação",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "401", description = "Não autorizado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "403", description = "Acesso proibido ao usuário",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "500", description = "Erro interno",
@@ -206,14 +179,6 @@ public class PessoaRest {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = Pessoa.class))}),
-            @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "400", description = "Erro de validação",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "401", description = "Não autorizado",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "403", description = "Acesso proibido ao usuário",
-                    content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "500", description = "Erro interno",
