@@ -10,4 +10,5 @@ public class CadastroApiApplication {
         SpringApplication.run(CadastroApiApplication.class, args);
     }
 
+
 }
