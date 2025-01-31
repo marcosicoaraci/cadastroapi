@@ -5,6 +5,7 @@ import br.com.totvs.dto.response.PessoaResponseDTO;
 import br.com.totvs.entity.Pessoa;
 import br.com.totvs.exceptions.ObjetoNaoEncontradoException;
 import br.com.totvs.repository.PessoaRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class PessoaSrv {
 
     public List<Pessoa> listarTodos(Pageable pageable){
         List<Pessoa> resposta = pessoaRepository.listar(pageable);
-        if (resposta.size() == 0) {
+        if (resposta.isEmpty()) {
             throw new ObjetoNaoEncontradoException("A lista não possui itens");
         }
 
@@ -33,8 +34,11 @@ public class PessoaSrv {
 
     public PessoaResponseDTO salvar(PessoaRequestDTO pessoaRequestDTO){
         try {
-//            pessoaRepository.save(pessoa);
-            return new PessoaResponseDTO();
+            ModelMapper modelMapper = new ModelMapper();
+            Pessoa pessoa = modelMapper.map(pessoaRequestDTO, Pessoa.class);
+            pessoaRepository.save(pessoa);
+            PessoaResponseDTO resposta = modelMapper.map(pessoa, PessoaResponseDTO.class);
+            return resposta;
         }catch (Exception e){
             throw new ObjetoNaoEncontradoException("Erro desconhecido");
         }
@@ -44,7 +48,7 @@ public class PessoaSrv {
         try {
             pessoaRepository.deleteById(id);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new ObjetoNaoEncontradoException("Erro ao excluir objeto: "+e);
         }
     }
 

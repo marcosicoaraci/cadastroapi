@@ -1,24 +1,21 @@
 package br.com.totvs.rest;
 
 import br.com.totvs.entity.Contato;
-import br.com.totvs.entity.Pessoa;
 import br.com.totvs.exceptions.ExceptionResponse;
 import br.com.totvs.service.ContatoSrv;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
-@Api(value = "Contato", tags = {"Contato"})
+@Tag(name = "Contato", description = "Cadastro de contatos")
 @RestController
 @RequestMapping(value = "/contato", produces = "application/json")
 public class ContatoRest {

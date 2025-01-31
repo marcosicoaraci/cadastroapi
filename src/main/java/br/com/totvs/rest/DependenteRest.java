@@ -4,19 +4,19 @@ package br.com.totvs.rest;
 import br.com.totvs.entity.Dependente;
 import br.com.totvs.exceptions.ExceptionResponse;
 import br.com.totvs.service.DependenteSrv;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "Dependente", tags = {"Dependente"})
+@Tag(name = "Dependente", description = "Cadastro de dependentes")
 @RestController
 @RequestMapping(value = "/dependente", produces = "application/json")
 public class DependenteRest {

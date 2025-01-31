@@ -11,12 +11,12 @@ import br.com.totvs.service.ContatoSrv;
 import br.com.totvs.service.DependenteSrv;
 import br.com.totvs.service.EnderecoSrv;
 import br.com.totvs.service.PessoaSrv;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ import java.util.List;
 
 
 
-@Api(value = "Pessoa", tags = {"Pessoa"})
+@Tag(name = "Pessoa", description = "Cadastro de pessoas")
 @RestController
 @RequestMapping(value = "/pessoa", produces = "application/json")
 public class PessoaRest {
