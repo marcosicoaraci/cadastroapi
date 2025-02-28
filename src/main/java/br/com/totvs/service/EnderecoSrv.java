@@ -2,8 +2,9 @@ package br.com.totvs.service;
 
 import br.com.totvs.entity.Endereco;
 import br.com.totvs.entity.Pessoa;
+import br.com.totvs.exceptions.ObjetoNaoEncontradoException;
 import br.com.totvs.repository.EnderecoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.totvs.repository.PessoaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,17 +12,19 @@ import java.util.List;
 @Service
 public class EnderecoSrv {
 
-    @Autowired
-    private EnderecoRepository enderecoRepository;
+    private final EnderecoRepository enderecoRepository;
+    private final PessoaRepository pessoaRepository;
 
-    @Autowired
-    private PessoaSrv pessoaSrv;
+    public EnderecoSrv(EnderecoRepository enderecoRepository, PessoaRepository pessoaRepository) {
+        this.enderecoRepository = enderecoRepository;
+        this.pessoaRepository = pessoaRepository;
+    }
 
     public Endereco getUm(Integer id){
         try {
             return enderecoRepository.findById(id).get();
         }catch (Exception e){
-            return null;
+            throw new ObjetoNaoEncontradoException("Erro ao recuperar endereço "+e);
         }
     }
 
@@ -31,11 +34,11 @@ public class EnderecoSrv {
 
     public void salvar(Endereco endereco,Integer idPessoa){
         try {
-            Pessoa pessoa = pessoaSrv.getUm(idPessoa);
+            Pessoa pessoa = pessoaRepository.findById(idPessoa).get();
             endereco.setPessoaEnderecoId(pessoa);
             enderecoRepository.save(endereco);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new ObjetoNaoEncontradoException("Erro ao cadastrar endereco "+e);
         }
     }
 
@@ -43,7 +46,7 @@ public class EnderecoSrv {
         try {
             enderecoRepository.deleteById(idPessoa);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new ObjetoNaoEncontradoException("Erro ao excluir endereco "+e);
         }
     }
 

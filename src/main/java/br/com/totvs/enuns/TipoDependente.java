@@ -7,7 +7,7 @@ public enum TipoDependente {
     FILHO,
 
     PAI,
-
+    PRIMO,
     MAE;
 
 

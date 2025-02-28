@@ -6,41 +6,52 @@ import br.com.totvs.entity.Pessoa;
 import br.com.totvs.exceptions.ObjetoNaoEncontradoException;
 import br.com.totvs.repository.PessoaRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PessoaSrv {
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
-
-    public Pessoa getUm(Integer id){
-        return this.pessoaRepository.findById(id)
-                .orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto com id "+id+" não encontrado"));
+    private final PessoaRepository pessoaRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
+    public PessoaSrv(PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
+    }
+    public PessoaResponseDTO getUm(Integer id){
+        try {
+            Pessoa pessoa = this.pessoaRepository.findById(id).get();
+            return modelMapper.map(pessoa, PessoaResponseDTO.class);
+        }catch (Exception e){
+            throw new ObjetoNaoEncontradoException("Erro ao recuperar item "+e);
+        }
     }
 
-    public List<Pessoa> listarTodos(Pageable pageable){
+    public List<PessoaResponseDTO> listarTodos(Pageable pageable){
+        List<PessoaResponseDTO> responseList = new ArrayList<>();
         List<Pessoa> resposta = pessoaRepository.listar(pageable);
         if (resposta.isEmpty()) {
             throw new ObjetoNaoEncontradoException("A lista não possui itens");
+        }else{
+            for (Pessoa pessoa : resposta) {
+                PessoaResponseDTO pessoaResponse = modelMapper.map(pessoa, PessoaResponseDTO.class);
+                responseList.add(pessoaResponse);
+            }
         }
 
-        return resposta;
+        return responseList;
     }
 
     public PessoaResponseDTO salvar(PessoaRequestDTO pessoaRequestDTO){
         try {
-            ModelMapper modelMapper = new ModelMapper();
             Pessoa pessoa = modelMapper.map(pessoaRequestDTO, Pessoa.class);
             pessoaRepository.save(pessoa);
             PessoaResponseDTO resposta = modelMapper.map(pessoa, PessoaResponseDTO.class);
             return resposta;
         }catch (Exception e){
-            throw new ObjetoNaoEncontradoException("Erro desconhecido");
+            throw new ObjetoNaoEncontradoException("Erro ao cadastrar objeto "+e);
         }
     }
 

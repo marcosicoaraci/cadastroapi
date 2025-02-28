@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
@@ -19,9 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/endereco", produces = "application/json")
 public class EnderecoRest {
-
-    @Autowired
-    private EnderecoSrv enderecoSrv;
+    private final EnderecoSrv enderecoSrv;
+    public EnderecoRest(EnderecoSrv enderecoSrv) {
+        this.enderecoSrv = enderecoSrv;
+    }
 
     @GetMapping(value = "/{id}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Recupera um endereço passando o ID",tags = {"Endereco"})

@@ -1,8 +1,8 @@
 package br.com.totvs.rest;
 
 import br.com.totvs.dto.request.PessoaRequestDTO;
+import br.com.totvs.dto.response.ContatoResponseDTO;
 import br.com.totvs.dto.response.PessoaResponseDTO;
-import br.com.totvs.entity.Contato;
 import br.com.totvs.entity.Dependente;
 import br.com.totvs.entity.Endereco;
 import br.com.totvs.entity.Pessoa;
@@ -12,12 +12,12 @@ import br.com.totvs.service.DependenteSrv;
 import br.com.totvs.service.EnderecoSrv;
 import br.com.totvs.service.PessoaSrv;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -34,17 +34,18 @@ import java.util.List;
 @RequestMapping(value = "/pessoa", produces = "application/json")
 public class PessoaRest {
 
-    @Autowired
-    private PessoaSrv pessoaSrv;
 
-    @Autowired
-    private ContatoSrv contatoSrv;
+    private final PessoaSrv pessoaSrv;
+    private final ContatoSrv contatoSrv;
+    private final DependenteSrv dependenteSrv;
+    private final EnderecoSrv enderecoSrv;
 
-    @Autowired
-    private DependenteSrv dependenteSrv;
-
-    @Autowired
-    private EnderecoSrv enderecoSrv;
+    public PessoaRest(PessoaSrv pessoaSrv, ContatoSrv contatoSrv, DependenteSrv dependenteSrv, EnderecoSrv enderecoSrv) {
+        this.pessoaSrv = pessoaSrv;
+        this.contatoSrv = contatoSrv;
+        this.dependenteSrv = dependenteSrv;
+        this.enderecoSrv = enderecoSrv;
+    }
 
     @GetMapping(value = "/{id}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     @Operation(summary = "Recupera uma pessoa passando o ID",tags = {"Pessoa"})
@@ -59,7 +60,7 @@ public class PessoaRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = ExceptionResponse.class))})
     })
-    public ResponseEntity<Pessoa> getUm(
+    public ResponseEntity<PessoaResponseDTO> getUm(
             @PathVariable("id") Integer id) {
         return new ResponseEntity<>(pessoaSrv.getUm(id), HttpStatus.OK);
     }
@@ -69,7 +70,7 @@ public class PessoaRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Pessoa.class))}),
+                            array = @ArraySchema(schema = @Schema(implementation = PessoaResponseDTO.class)))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -77,7 +78,7 @@ public class PessoaRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
-    public ResponseEntity<List<Pessoa>> get(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
+    public ResponseEntity<List<PessoaResponseDTO>> get(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
                                                     @RequestParam(value = "size", defaultValue = "20", required = false) Integer size) {
         Pageable pageable = PageRequest.of(page,size);
         return new ResponseEntity<>(pessoaSrv.listarTodos(pageable), HttpStatus.OK);
@@ -88,7 +89,7 @@ public class PessoaRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Pessoa.class))}),
+                            schema = @Schema(implementation = PessoaResponseDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -108,7 +109,7 @@ public class PessoaRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Pessoa.class))}),
+                            schema = @Schema(implementation = PessoaResponseDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -127,7 +128,7 @@ public class PessoaRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Pessoa.class))}),
+                            schema = @Schema(implementation = PessoaResponseDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Objeto Não Encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -146,7 +147,7 @@ public class PessoaRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Pessoa.class))}),
+                            schema = @Schema(implementation = ContatoResponseDTO.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Não encontrado",
@@ -154,7 +155,7 @@ public class PessoaRest {
             @ApiResponse(responseCode = "500", description = "Erro interno",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)})
     })
-    public ResponseEntity<List<Contato>> getContatos(@PathVariable("idPessoa") Integer idPessoa) {
+    public ResponseEntity<List<ContatoResponseDTO>> getContatos(@PathVariable("idPessoa") Integer idPessoa) {
         return new ResponseEntity<>(contatoSrv.listarPorIdPessoa(idPessoa), HttpStatus.OK);
     }
 

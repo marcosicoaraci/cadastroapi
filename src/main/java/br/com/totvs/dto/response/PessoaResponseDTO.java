@@ -1,17 +1,27 @@
 package br.com.totvs.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.Date;
 
 public class PessoaResponseDTO {
 
+    @Schema(type = "integer", example = "1")
     private Integer id;
+    @Schema(type = "string", example = "Biff Howard Tannen")
     private String nome;
+    @Schema(type = "string", example = "Biff")
     private String apelido;
+    @Schema(type = "string", example = "99999999978")
     private String cpf;
+    @Schema(type = "string", example = "Student")
     private String profissao;
+    @Schema(type = "integer", example = "1000")
     private double salario;
+    @Schema(type = "string", format = "date", example = "1990-05-15")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dataNascimento;
-
 
     public Integer getId() {
         return id;
