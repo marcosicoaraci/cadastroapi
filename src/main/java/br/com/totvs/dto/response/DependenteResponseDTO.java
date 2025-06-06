@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class DependenteResponseDTO {
 
+    private Integer id;
     @Schema(type = "string", example = "Doctor Emmet Brown")
     private String nome;
     @Schema(type = "string", example = "PAI")
@@ -33,5 +34,13 @@ public class DependenteResponseDTO {
 
     public void setIdPessoa(Integer idPessoa) {
         this.idPessoa = idPessoa;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

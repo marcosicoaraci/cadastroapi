@@ -1,8 +1,9 @@
 package br.com.totvs.rest;
 
-import br.com.totvs.entity.Endereco;
+import br.com.totvs.dto.request.EnderecoRequestDTO;
+import br.com.totvs.dto.response.EnderecoResponseDTO;
 import br.com.totvs.exceptions.ExceptionResponse;
-import br.com.totvs.service.EnderecoSrv;
+import br.com.totvs.service.EnderecoSrvImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/endereco", produces = "application/json")
 public class EnderecoRest {
-    private final EnderecoSrv enderecoSrv;
-    public EnderecoRest(EnderecoSrv enderecoSrv) {
-        this.enderecoSrv = enderecoSrv;
+    private final EnderecoSrvImpl enderecoSrvImpl;
+    public EnderecoRest(EnderecoSrvImpl enderecoSrvImpl) {
+        this.enderecoSrvImpl = enderecoSrvImpl;
     }
 
     @GetMapping(value = "/{id}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -28,7 +29,7 @@ public class EnderecoRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Endereco.class))}),
+                            schema = @Schema(implementation = EnderecoResponseDTO.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -39,9 +40,9 @@ public class EnderecoRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
-    public ResponseEntity<Endereco> getUm(
+    public ResponseEntity<EnderecoResponseDTO> getUm(
             @PathVariable("id") Integer id) {
-        return new ResponseEntity<>(enderecoSrv.getUm(id), HttpStatus.OK);
+        return new ResponseEntity<>(enderecoSrvImpl.getUm(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/{idPessoa}/salvarendereco",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -49,7 +50,7 @@ public class EnderecoRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Endereco.class))}),
+                            schema = @Schema(implementation = EnderecoResponseDTO.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -60,10 +61,9 @@ public class EnderecoRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
-    public ResponseEntity<Endereco> post(@PathVariable("idPessoa") Integer idPessoa, @RequestBody Endereco endereco) {
-        enderecoSrv.salvar(endereco,idPessoa);
-
-        return new ResponseEntity<>(endereco, HttpStatus.OK);
+    public ResponseEntity<EnderecoResponseDTO> post(@RequestBody EnderecoRequestDTO endereco) {
+        EnderecoResponseDTO response = enderecoSrvImpl.salvar(endereco);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{idPessoa}/updateendereco",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -71,7 +71,7 @@ public class EnderecoRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Endereco.class))}),
+                            schema = @Schema(implementation = EnderecoResponseDTO.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -82,10 +82,10 @@ public class EnderecoRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
-    public ResponseEntity<Endereco> put(@PathVariable("idPessoa") Integer idPessoa, @RequestBody Endereco endereco) {
-        enderecoSrv.salvar(endereco,idPessoa);
-
-        return new ResponseEntity<>(endereco, HttpStatus.OK);
+    public ResponseEntity<EnderecoResponseDTO> put(@RequestBody EnderecoRequestDTO endereco) {
+        enderecoSrvImpl.salvar(endereco);
+        EnderecoResponseDTO response = enderecoSrvImpl.salvar(endereco);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{id}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -93,7 +93,7 @@ public class EnderecoRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Endereco.class))}),
+                            schema = @Schema(implementation = EnderecoResponseDTO.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -105,7 +105,7 @@ public class EnderecoRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        enderecoSrv.excluir(id);
+        enderecoSrvImpl.excluir(id);
 
         return ResponseEntity.noContent().build();
     }

@@ -8,6 +8,7 @@ import java.util.Date;
 public class PessoaRequestDTO {
 
 
+    private Integer id;
     @Schema(type = "string", example = "Biff Howard Tannen")
     private String nome;
     @Schema(type = "string", example = "Biff")
@@ -68,5 +69,13 @@ public class PessoaRequestDTO {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

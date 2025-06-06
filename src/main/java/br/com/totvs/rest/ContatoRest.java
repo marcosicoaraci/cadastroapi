@@ -2,9 +2,8 @@ package br.com.totvs.rest;
 
 import br.com.totvs.dto.request.ContatoRequestDTO;
 import br.com.totvs.dto.response.ContatoResponseDTO;
-import br.com.totvs.entity.Contato;
 import br.com.totvs.exceptions.ExceptionResponse;
-import br.com.totvs.service.ContatoSrv;
+import br.com.totvs.service.ContatoSrvImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/contato", produces = "application/json")
 public class ContatoRest {
 
-    private final ContatoSrv contatoSrv;
-    public ContatoRest(ContatoSrv contatoSrv) {
-        this.contatoSrv = contatoSrv;
+    private final ContatoSrvImpl contatoSrvImpl;
+    public ContatoRest(ContatoSrvImpl contatoSrvImpl) {
+        this.contatoSrvImpl = contatoSrvImpl;
     }
 
     @GetMapping(value = "/{id}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -44,7 +43,7 @@ public class ContatoRest {
     })
     public ResponseEntity<ContatoResponseDTO> getUm(
             @PathVariable("id") Integer id) {
-        return new ResponseEntity<>(contatoSrv.getUm(id), HttpStatus.OK);
+        return new ResponseEntity<>(contatoSrvImpl.getUm(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/salvarcontato",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -64,7 +63,7 @@ public class ContatoRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<ContatoResponseDTO> post(@RequestBody ContatoRequestDTO contato) {
-        ContatoResponseDTO contatoResponse = contatoSrv.salvar(contato);
+        ContatoResponseDTO contatoResponse = contatoSrvImpl.salvar(contato);
 
         return new ResponseEntity<>(contatoResponse, HttpStatus.OK);
     }
@@ -75,7 +74,7 @@ public class ContatoRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Contato.class))}),
+                            schema = @Schema(implementation = ContatoResponseDTO.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -87,7 +86,7 @@ public class ContatoRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<ContatoResponseDTO> put(@RequestBody ContatoRequestDTO contatoRequestDTO) {
-        ContatoResponseDTO contatoResponseDTO = contatoSrv.salvar(contatoRequestDTO);
+        ContatoResponseDTO contatoResponseDTO = contatoSrvImpl.salvar(contatoRequestDTO);
 
         return new ResponseEntity<>(contatoResponseDTO, HttpStatus.OK);
     }
@@ -98,7 +97,7 @@ public class ContatoRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operação realizada com sucesso",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Contato.class))}),
+                            schema = @Schema(implementation = ContatoResponseDTO.class))}),
             @ApiResponse(responseCode = "204", description = "Objeto não encontrado",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionResponse.class))}),
@@ -110,7 +109,7 @@ public class ContatoRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        contatoSrv.excluir(id);
+        contatoSrvImpl.excluir(id);
 
         return ResponseEntity.noContent().build();
     }

@@ -5,7 +5,7 @@ import br.com.totvs.dto.request.DependenteRequestDTO;
 import br.com.totvs.dto.response.DependenteResponseDTO;
 import br.com.totvs.entity.Dependente;
 import br.com.totvs.exceptions.ExceptionResponse;
-import br.com.totvs.service.DependenteSrv;
+import br.com.totvs.service.DependenteSrvImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/dependente", produces = "application/json")
 public class DependenteRest {
 
-    private final DependenteSrv dependenteSrv;
+    private final DependenteSrvImpl dependenteSrvImpl;
 
-    public DependenteRest(DependenteSrv dependenteSrv) {
-        this.dependenteSrv = dependenteSrv;
+    public DependenteRest(DependenteSrvImpl dependenteSrvImpl) {
+        this.dependenteSrvImpl = dependenteSrvImpl;
     }
 
     @GetMapping(value = "/{id}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -46,7 +46,7 @@ public class DependenteRest {
     })
     public ResponseEntity<DependenteResponseDTO> getUm(
             @PathVariable("id") Integer id) {
-        return new ResponseEntity<>(dependenteSrv.getUm(id), HttpStatus.OK);
+        return new ResponseEntity<>(dependenteSrvImpl.getUm(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/salvardependente",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -66,7 +66,7 @@ public class DependenteRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<DependenteResponseDTO> post(@RequestBody DependenteRequestDTO dependenteRequestDTO) {
-        DependenteResponseDTO dependente = dependenteSrv.salvar(dependenteRequestDTO);
+        DependenteResponseDTO dependente = dependenteSrvImpl.salvar(dependenteRequestDTO);
 
         return new ResponseEntity<>(dependente, HttpStatus.OK);
     }
@@ -88,7 +88,8 @@ public class DependenteRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<DependenteResponseDTO> put(@PathVariable("idDependente") Integer idDependente,@RequestBody DependenteRequestDTO dependente) {
-        DependenteResponseDTO dependenteResponseDTO = dependenteSrv.atualizar(idDependente,dependente);
+        dependente.setId(idDependente);
+        DependenteResponseDTO dependenteResponseDTO = dependenteSrvImpl.atualizar(dependente);
 
         return new ResponseEntity<>(dependenteResponseDTO, HttpStatus.OK);
     }
@@ -110,7 +111,7 @@ public class DependenteRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        dependenteSrv.excluir(id);
+        dependenteSrvImpl.excluir(id);
 
         return ResponseEntity.noContent().build();
     }

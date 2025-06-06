@@ -3,6 +3,7 @@ package br.com.totvs.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ContatoRequestDTO {
+    private Integer id;
     @Schema(type = "string", example = "91")
     private String ddd;
     @Schema(type = "string", example = "981665544")
@@ -42,5 +43,13 @@ public class ContatoRequestDTO {
 
     public void setPessoaContatoId(Integer pessoaContatoId) {
         this.pessoaContatoId = pessoaContatoId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

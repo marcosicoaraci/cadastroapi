@@ -2,15 +2,15 @@ package br.com.totvs.rest;
 
 import br.com.totvs.dto.request.PessoaRequestDTO;
 import br.com.totvs.dto.response.ContatoResponseDTO;
+import br.com.totvs.dto.response.DependenteResponseDTO;
+import br.com.totvs.dto.response.EnderecoResponseDTO;
 import br.com.totvs.dto.response.PessoaResponseDTO;
-import br.com.totvs.entity.Dependente;
-import br.com.totvs.entity.Endereco;
 import br.com.totvs.entity.Pessoa;
 import br.com.totvs.exceptions.ExceptionResponse;
-import br.com.totvs.service.ContatoSrv;
-import br.com.totvs.service.DependenteSrv;
-import br.com.totvs.service.EnderecoSrv;
-import br.com.totvs.service.PessoaSrv;
+import br.com.totvs.service.ContatoSrvImpl;
+import br.com.totvs.service.DependenteSrvImpl;
+import br.com.totvs.service.EnderecoSrvImpl;
+import br.com.totvs.service.PessoaSrvImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,16 +35,16 @@ import java.util.List;
 public class PessoaRest {
 
 
-    private final PessoaSrv pessoaSrv;
-    private final ContatoSrv contatoSrv;
-    private final DependenteSrv dependenteSrv;
-    private final EnderecoSrv enderecoSrv;
+    private final PessoaSrvImpl pessoaSrvImpl;
+    private final ContatoSrvImpl contatoSrvImpl;
+    private final DependenteSrvImpl dependenteSrvImpl;
+    private final EnderecoSrvImpl enderecoSrvImpl;
 
-    public PessoaRest(PessoaSrv pessoaSrv, ContatoSrv contatoSrv, DependenteSrv dependenteSrv, EnderecoSrv enderecoSrv) {
-        this.pessoaSrv = pessoaSrv;
-        this.contatoSrv = contatoSrv;
-        this.dependenteSrv = dependenteSrv;
-        this.enderecoSrv = enderecoSrv;
+    public PessoaRest(PessoaSrvImpl pessoaSrvImpl, ContatoSrvImpl contatoSrvImpl, DependenteSrvImpl dependenteSrvImpl, EnderecoSrvImpl enderecoSrvImpl) {
+        this.pessoaSrvImpl = pessoaSrvImpl;
+        this.contatoSrvImpl = contatoSrvImpl;
+        this.dependenteSrvImpl = dependenteSrvImpl;
+        this.enderecoSrvImpl = enderecoSrvImpl;
     }
 
     @GetMapping(value = "/{id}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -62,7 +62,7 @@ public class PessoaRest {
     })
     public ResponseEntity<PessoaResponseDTO> getUm(
             @PathVariable("id") Integer id) {
-        return new ResponseEntity<>(pessoaSrv.getUm(id), HttpStatus.OK);
+        return new ResponseEntity<>(pessoaSrvImpl.getUm(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -81,7 +81,7 @@ public class PessoaRest {
     public ResponseEntity<List<PessoaResponseDTO>> get(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page,
                                                     @RequestParam(value = "size", defaultValue = "20", required = false) Integer size) {
         Pageable pageable = PageRequest.of(page,size);
-        return new ResponseEntity<>(pessoaSrv.listarTodos(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(pessoaSrvImpl.listarTodos(pageable), HttpStatus.OK);
     }
 
     @PostMapping(produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -98,7 +98,7 @@ public class PessoaRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<PessoaResponseDTO> post(@RequestBody PessoaRequestDTO pessoaRequestDTO) {
-        PessoaResponseDTO pessoaResponseDTO = pessoaSrv.salvar(pessoaRequestDTO);
+        PessoaResponseDTO pessoaResponseDTO = pessoaSrvImpl.salvar(pessoaRequestDTO);
 
         return new ResponseEntity<>(pessoaResponseDTO, HttpStatus.OK);
     }
@@ -118,7 +118,7 @@ public class PessoaRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<PessoaResponseDTO> put(@RequestBody PessoaRequestDTO pessoaRequestDTO) {
-        PessoaResponseDTO pessoaResponseDTO = pessoaSrv.salvar(pessoaRequestDTO);
+        PessoaResponseDTO pessoaResponseDTO = pessoaSrvImpl.salvar(pessoaRequestDTO);
 
         return new ResponseEntity<>(pessoaResponseDTO, HttpStatus.OK);
     }
@@ -137,7 +137,7 @@ public class PessoaRest {
                             schema = @Schema(implementation = ExceptionResponse.class))})
     })
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        pessoaSrv.excluir(id);
+        pessoaSrvImpl.excluir(id);
 
         return ResponseEntity.noContent().build();
     }
@@ -156,7 +156,7 @@ public class PessoaRest {
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)})
     })
     public ResponseEntity<List<ContatoResponseDTO>> getContatos(@PathVariable("idPessoa") Integer idPessoa) {
-        return new ResponseEntity<>(contatoSrv.listarPorIdPessoa(idPessoa), HttpStatus.OK);
+        return new ResponseEntity<>(contatoSrvImpl.listarPorIdPessoa(idPessoa), HttpStatus.OK);
     }
 
     @GetMapping(value = "/enderecos/{idPessoa}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -170,8 +170,8 @@ public class PessoaRest {
             @ApiResponse(responseCode = "500", description = "Erro interno",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)})
     })
-    public ResponseEntity<List<Endereco>> getEnderecos(@PathVariable("idPessoa") Integer idPessoa) {
-        return new ResponseEntity<>(enderecoSrv.listarPorIdPessoa(idPessoa), HttpStatus.OK);
+    public ResponseEntity<List<EnderecoResponseDTO>> getEnderecos(@PathVariable("idPessoa") Integer idPessoa) {
+        return new ResponseEntity<>(enderecoSrvImpl.listarPorIdPessoa(idPessoa), HttpStatus.OK);
     }
 
     @GetMapping(value = "/dependentes/{idPessoa}",produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
@@ -185,8 +185,8 @@ public class PessoaRest {
             @ApiResponse(responseCode = "500", description = "Erro interno",
                     content = {@Content(mediaType = MimeTypeUtils.APPLICATION_JSON_VALUE)})
     })
-    public ResponseEntity<List<Dependente>> getDependentes(@PathVariable("idPessoa") Integer idPessoa) {
-        return new ResponseEntity<>(dependenteSrv.listarPorIdPessoa(idPessoa), HttpStatus.OK);
+    public ResponseEntity<List<DependenteResponseDTO>> getDependentes(@PathVariable("idPessoa") Integer idPessoa) {
+        return new ResponseEntity<>(dependenteSrvImpl.listarPorIdPessoa(idPessoa), HttpStatus.OK);
     }
 
 
